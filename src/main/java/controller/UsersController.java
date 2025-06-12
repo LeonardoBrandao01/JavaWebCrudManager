@@ -12,6 +12,7 @@ import model.ModelException;
 import model.User;
 import model.dao.DAOFactory;
 import model.dao.UserDAO;
+import model.utils.PasswordEncryptor;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
@@ -119,11 +120,14 @@ public class UsersController extends HttpServlet {
 		String userName = req.getParameter("name");
 		String userGender = req.getParameter("gender");
 		String userEMail = req.getParameter("mail");
+		String userPassword  = req.getParameter("password");
 		
 		User user = new User();
 		user.setName(userName);
 		user.setGender(userGender);
 		user.setEmail(userEMail);
+		user.setPassword(PasswordEncryptor.hashPassword(userPassword));
+
 		
 		UserDAO dao = DAOFactory.createDAO(UserDAO.class);
 		
@@ -143,31 +147,35 @@ public class UsersController extends HttpServlet {
 	}
 	
 	private void updateUser(HttpServletRequest req, HttpServletResponse resp) {
-		String userName = req.getParameter("name");
-		String userGender = req.getParameter("gender");
-		String userEMail = req.getParameter("mail");
-		
-		User user = loadUser(req);
-		user.setName(userName);
-		user.setGender(userGender);
-		user.setEmail(userEMail);
-		
-		UserDAO dao = DAOFactory.createDAO(UserDAO.class);
-		
-		try {
-			if (dao.update(user)) {
-				ControllerUtil.sucessMessage(req, "Usuário '" + user.getName() + "' atualizado com sucesso.");
-			}
-			else {
-				ControllerUtil.errorMessage(req, "Usuário '" + user.getName() + "' não pode ser atualizado.");
-			}
-				
-		} catch (ModelException e) {
-			// log no servidor
-			e.printStackTrace();
-			ControllerUtil.errorMessage(req, e.getMessage());
-		}
+	    String userName = req.getParameter("name");
+	    String userGender = req.getParameter("gender");
+	    String userEMail = req.getParameter("mail");
+	    String userPassword = req.getParameter("password");
+
+	    User user = loadUser(req);
+	    user.setName(userName);
+	    user.setGender(userGender);
+	    user.setEmail(userEMail);
+
+	    // Atualiza a senha somente se um novo valor foi fornecido
+	    if (userPassword != null && !userPassword.trim().isEmpty()) {
+	        user.setPassword(PasswordEncryptor.hashPassword(userPassword));
+	    }
+
+	    UserDAO dao = DAOFactory.createDAO(UserDAO.class);
+
+	    try {
+	        if (dao.update(user)) {
+	            ControllerUtil.sucessMessage(req, "Usuário '" + user.getName() + "' atualizado com sucesso.");
+	        } else {
+	            ControllerUtil.errorMessage(req, "Usuário '" + user.getName() + "' não pode ser atualizado.");
+	        }
+	    } catch (ModelException e) {
+	        e.printStackTrace();
+	        ControllerUtil.errorMessage(req, e.getMessage());
+	    }
 	}
+
 	
 	private void deleteUser(HttpServletRequest req, HttpServletResponse resp) {
 		String userIdParameter = req.getParameter("id");

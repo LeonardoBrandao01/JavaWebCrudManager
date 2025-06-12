@@ -42,6 +42,15 @@
 							   oninput="setCustomValidity('')"
 							   value="${user.getEmail()}">
 					</div>
+					
+					<div class="form-group col-md-4">
+					<label for="user_pw_id" class="form-label">Senha</label> 
+					<input
+						type="password" id="password" name="password"
+						class="form-control" ${usuario eq null ? "required" : ""}>
+				</div>
+					
+					
 				</div>
 				<hr />
 				<div id="actions" class="row pull-right">

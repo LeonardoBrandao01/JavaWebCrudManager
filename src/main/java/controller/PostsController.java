@@ -19,6 +19,7 @@ import model.dao.PostDAO;
 // Herda da classe HttpServlet (extends HttpServlet) para ser tratada como um Servlet
 // Anota a classe (@WebServlet) ajustando as URLs (urlPatterns) as quais ela responde
 @WebServlet(urlPatterns = {"", "/posts", "/post/form", "/post/delete", "/post/insert", "/post/update"})
+
 public class PostsController extends HttpServlet {
 	
 	// Sobrescreve o método doGet, sendo capaz de responder métodos HTTP GET

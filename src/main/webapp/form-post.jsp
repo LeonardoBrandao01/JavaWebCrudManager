@@ -11,6 +11,11 @@
 			
 		<div id="container" class="container-fluid">
 			<h3 class="page-header">Adicionar Post</h3>
+			
+			<c:if test="${empty users}">
+  <p style="color:red;">A lista de usuários não foi carregada!</p>
+</c:if>
+			
 
 			<form action="${pageContext.request.contextPath}/post/${action}" method="POST">
 				<input type="hidden" value="${post.getId()}" name="postId">
@@ -31,9 +36,10 @@
 							    oninput="setCustomValidity('')">
 						  <option value="" disabled ${not empty post ? "" : "selected"}>Selecione um usuário</option>
 						  <c:forEach var="user" items="${users}">
-						  	<option value="${user.getId()}"  ${post.getUser().getId() == user.getId() ? "selected" : ""}>
-						  		${user.getName()}
-						  	</option>	
+						  <option value="${user.getId()}"
+							<c:if test="${not empty post and post.user.id == user.id}">selected</c:if>>
+								${user.getName()}
+								</option>
 						  </c:forEach>
 						</select>
 					</div>
