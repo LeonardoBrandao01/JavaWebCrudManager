@@ -14,6 +14,7 @@ public class DAOFactory {
 		listDAOsInterfaces.put(PostDAO.class, new MySQLPostDAO());
 		listDAOsInterfaces.put(UserDAO.class, new MySQLUserDAO());
 		listDAOsInterfaces.put(CompanyDAO.class, new MySQLCompanyDAO());
+		listDAOsInterfaces.put(LoyaltyProgramDAO.class, new MySQLLoyaltyProgramDAO());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -21,3 +22,4 @@ public class DAOFactory {
 		return (DAOInterface) listDAOsInterfaces.get(entity);
 	} 
 }
+

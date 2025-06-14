@@ -19,6 +19,7 @@
 				<li><a href="${pageContext.request.contextPath}/users"><span class="glyphicon glyphicon-user" /><strong>&nbspUsuários</strong></a></li>
 				<li><a href="${pageContext.request.contextPath}"><span class="glyphicon glyphicon-pencil" /><strong>&nbspPosts</strong></a></li>
 				<li><a href="${pageContext.request.contextPath}/companies"><span class="glyphicon glyphicon-pushpin" /><strong>&nbspEmpresas</strong></a></li>
+				<li><a href="${pageContext.request.contextPath}/loyaltyprograms"><span class="glyphicon glyphicon-plane" /><strong>&nbspProgramas de Fidelidade</strong></a></li>
 				
 				<%-- Exibe o menu "Perfil" apenas se o usuário estiver logado --%>
 				<%
